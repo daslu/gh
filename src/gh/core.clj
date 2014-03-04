@@ -194,3 +194,22 @@
          (scatter-plot :WatchEvent :PushEvent
                        :data)
          view)))
+
+(def so (read-dataset "/home/we/workspace/data/so.csv"
+                      :header true))
+
+
+(comment
+  (let [x (->> so
+               ($order [:y :m] :asc)
+               ($where {:TagName "clojure"})
+               ($ :c))
+        y (->> so
+               ($order [:y :m] :asc)
+               ($where {:TagName "clojurescript"})
+               ($ :c))]
+    (view (add-lines
+           (xy-plot (range (count x))
+                    x)
+           (range (count y))
+           y))))
